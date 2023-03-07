@@ -19,7 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "docs": "jsdoc -c jsdoc.json"
+    "docs": "jsdoc -c jsdoc.json",
+    "server": "json-server --watch db.json --delay 1500 --port 4000"
   },
   "eslintConfig": {
     "extends": [

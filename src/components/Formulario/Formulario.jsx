@@ -1,18 +1,42 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import pokebola from "../../assets/pokebola.png";
 import entrenador from "../../assets/entrenador.png";
 import pikachu from "../../assets/pikachu.png";
 import Input from "../Input/Input";
 import Detalle from "./Detalle";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getPokemon } from "../../api/getPokemon";
+import { postData } from "../../api/api";
 
 
 const Formulario = () => {
-
-  const { data, error, isError, isLoading, isSuccess, isFetching, refetch } = useQuery(['type'], getPokemon)
   
+  const refForm = useRef(null)
+  const { data, isError, isLoading} = useQuery(['type'], getPokemon)
+
+  //const {mutate, isLoading1, isSuccess, data1, resset} = useMutation( postData )
+
+  // mutate({
+  //   name: refForm.current.elements.nombre.value
+  // })
+  
+  console.log(refForm);
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    // mutate({
+    //     name: refForm.current.elements.nombre.value,
+    //     lastname: refForm.current.elements.apellido.value
+    // }, {
+    //     onSuccess: () => {
+    //       refForm.current.reset()
+    //     }
+    // })
+
+}
+
   return (
     <>
       <header className="form-header">
@@ -24,13 +48,13 @@ const Formulario = () => {
           Home
         </Link>
       </header>
-      <div className="formulario-ingreso">
+      <form className="formulario-ingreso" onSubmit={handleSubmit} ref={refForm}>
         <h3>Solicitud de atención</h3>
         <p>
           Por favor, completa el formulario para que podamos atender a tu
           pokémon
         </p>
-        <div className="cuerpo-formulario">
+        <div className="cuerpo-formulario" >
           {/*
            Si tan solo tuviesemos una manera de "encapsular" nuestros componentes
            para que puedan acceder al estado global.
@@ -70,10 +94,10 @@ const Formulario = () => {
               />
               <label> tipo </label>
               <select 
-                name="tipoPokemon" >
+                name="tipoPokemon" 
+                disabled = {isLoading || isError }
+              > 
                 {
-                  (isLoading || isError ) ? <option >Undefined</option> : 
-
                     data?.results.map((item)=>(
                       <option>{item.name}</option>
                     ))
@@ -98,7 +122,7 @@ const Formulario = () => {
           </div>
           <Detalle />
         </div>
-      </div>
+      </form>
     </>
   );
 };

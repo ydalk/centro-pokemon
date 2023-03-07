@@ -8,7 +8,7 @@ const Detalle = () => {
   const [store, dispatch] = useContext(FormContext)
 
   return (
-    <div className="detalle-formulario">
+    <div className="detalle-formulario" >
       <div className="encabezado">
         <h3>Vista Previa de la Solicitud</h3>
       </div>
